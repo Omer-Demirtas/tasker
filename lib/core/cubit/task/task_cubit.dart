@@ -8,14 +8,12 @@ class TaskCubit extends Cubit<TaskState> {
   TaskCubit() : super(const TaskState(tasks: [], isLoading: false));
 
 
-  void addTask() async
+  void addTask(Task task) async
   {
     emit(TaskState(isLoading: true, tasks: state.tasks));
     await Future.delayed(const Duration(seconds: 1));
-
     List<Task> tasks = state.tasks.toList();
-    tasks.add(Task(title: 'New Task', startAt: DateTime.now(), finishAt: DateTime.now(), description: 'asd', id: 1));
-
+    tasks.add(task);
     emit(TaskState(isLoading: false, tasks: tasks));
   }
 }

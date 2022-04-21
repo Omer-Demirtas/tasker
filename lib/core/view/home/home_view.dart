@@ -35,25 +35,6 @@ class HomeView extends StatelessWidget
                   )
                 ],
               ),
-              Expanded(
-                  child: SizedBox.expand(
-                    child: SingleChildScrollView(
-                      child: BlocProvider<TaskCubit>(
-                        create: (context) => TaskCubit(),
-                        child: BlocBuilder<TaskCubit, TaskState>(
-                          builder: (context, state) => Column(
-                            children: [
-                              ElevatedButton(onPressed: () => context.read<TaskCubit>().addTask(),
-                                  child: const Text('create new task')
-                              ),
-                              for (Task task in state.tasks) _buildTask(task, context)
-                            ],
-                          ),
-                        ),
-                      )
-                    ),
-                  )
-              ),
             ],
           ),
         ),

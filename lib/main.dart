@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
+import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/view/home/home_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,31 +15,45 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.purple.shade200,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.purple.shade200,
-            secondary: Colors.pink.shade200
-        ),
+    return BlocBuilder<ThemeCubit, ThemeData>(
+      builder: (_, theme) => MaterialApp(
+        theme: theme,
+        routes: {
+          AddTaskView.addTaskViewRoute: (context) => const AddTaskView(),
+          TaskView.taskViewRoute: (context) => const TaskView()
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == AddTaskView.addTaskViewRoute) {
+            final args = settings.arguments;
+            return MaterialPageRoute(
+              builder: (context) => const AddTaskView()
+            );
+          }
+          assert(false, 'Need to implement ${settings.name}');
+          return null;
+        },
+        title: 'Navigation with Arguments',
+        home: const HomeView(),
       ),
-      routes: {
-        AddTaskView.addTaskViewRoute: (context) => const AddTaskView(),
-        TaskView.taskViewRoute: (context) => const TaskView()
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == AddTaskView.addTaskViewRoute) {
-          final args = settings.arguments;
-          return MaterialPageRoute(
-            builder: (context) => const AddTaskView()
-          );
-        }
+    );
+  }
+}
 
-        assert(false, 'Need to implement ${settings.name}');
-        return null;
-      },
-      title: 'Navigation with Arguments',
-      home: const HomeView(),
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+        providers:  [
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider<TaskCubit>(
+            create: (context) => TaskCubit(),
+          ),
+        ],
+        child: const MyApp(),
     );
   }
 }

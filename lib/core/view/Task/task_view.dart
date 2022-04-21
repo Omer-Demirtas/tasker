@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
+import 'package:tasker/core/model/tag.dart';
 import 'package:tasker/core/model/task.dart';
+import 'package:tasker/core/utils/tags.dart';
+import 'package:tasker/core/view/add_task/add_task_view.dart';
+import 'package:tasker/core/widget/tag/tag_list.dart';
 
 class TaskView extends StatelessWidget
 {
@@ -9,17 +13,20 @@ class TaskView extends StatelessWidget
 
   const TaskView({Key? key}) : super(key: key);
 
+  void example()
+  {
+    print('ASD');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocProvider<TaskCubit>(
-        create: (context) => TaskCubit(),
-        child: BlocBuilder<TaskCubit, TaskState>(
+      child: BlocBuilder<TaskCubit, TaskState>(
             builder: (context, state) => Scaffold(
             body: Column(
               children: [
                 _buildAppBar(context),
-                _buildDays(),
+                TagList(voidCallback: example,),
                 const SizedBox(height: 20,),
                 Expanded(
                     child: state.isLoading ? const Center(
@@ -33,10 +40,12 @@ class TaskView extends StatelessWidget
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => context.read<TaskCubit>().addTask(),
+              onPressed: () => {
+                Navigator.pushNamed(context, AddTaskView.addTaskViewRoute),
+                //context.read<TaskCubit>().addTask()
+              }
             ),
           ),
-        ),
       ),
     );
   }
@@ -69,7 +78,7 @@ class TaskView extends StatelessWidget
                   )
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 children: const [
                   Chip(avatar: Icon(Icons.school), label: Text('school')),
@@ -83,35 +92,16 @@ class TaskView extends StatelessWidget
       ),
     );
   }
-  
-  Widget _buildDays()
-  {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      margin: const EdgeInsets.only(top: 10),
-      height: 50,
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        children: [
-          for (int i in Iterable<int>.generate(20).toList()) Container(
-            margin: const EdgeInsets.only(right: 10),
-            child: const Chip(avatar: Icon(Icons.school), label: Text("School"),)
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _buildAppBar(BuildContext context)
   {
     return Padding(
-      padding: EdgeInsets.only(top: 10, right: 20, left: 20),
+      padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
       child: Row(
         children: [
           IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_ios)
+              icon: const Icon(Icons.arrow_back_ios)
           )
         ],
       ),
