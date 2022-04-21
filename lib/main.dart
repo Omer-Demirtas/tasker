@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/view/home/home_view.dart';
 
@@ -20,12 +21,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        AddTaskView.addTaskViewRoute: (context) => const AddTaskView()
+        AddTaskView.addTaskViewRoute: (context) => const AddTaskView(),
+        TaskView.taskViewRoute: (context) => const TaskView()
       },
-      // Provide a function to handle named routes.
-      // Use this function to identify the named
-      // route being pushed, and create the correct
-      // Screen.
       onGenerateRoute: (settings) {
         if (settings.name == AddTaskView.addTaskViewRoute) {
           final args = settings.arguments;

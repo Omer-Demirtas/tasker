@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/task.dart';
+import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/widget/section_title.dart';
 
@@ -14,18 +15,26 @@ class HomeView extends StatelessWidget
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
           child: Column(
             children: [
               Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.menu),
                     ],
                   )
               ),
-              SectionTitle(),
+              const SectionTitle(),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () => Navigator.pushNamed(context, TaskView.taskViewRoute),
+                      child: const Text('Go to tasks')
+                  )
+                ],
+              ),
               Expanded(
                   child: SizedBox.expand(
                     child: SingleChildScrollView(
