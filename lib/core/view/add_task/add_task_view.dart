@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasker/core/utils/style_constents.dart';
 import 'package:tasker/core/view/add_task/add_task_form.dart';
 import 'package:tasker/core/widget/tag/tag_list.dart';
 
@@ -25,7 +26,7 @@ class AddTaskView extends StatelessWidget
   Widget _buildAppBar(BuildContext context)
   {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+      padding: const AppBarPadding.all(),
       child: Row(
         children: [
           IconButton(

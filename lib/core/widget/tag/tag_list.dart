@@ -4,9 +4,7 @@ import 'package:tasker/core/utils/tags.dart';
 
 class TagList extends StatelessWidget
 {
-  final VoidCallback voidCallback;
-
-  const TagList({Key? key, required this.voidCallback}) : super(key: key);
+  const TagList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,7 @@ class TagList extends StatelessWidget
           for (Tag icon in Tags.tags) Container(
               margin: const EdgeInsets.only(right: 10),
               child: InputChip(
-                onSelected: (value) => voidCallback(),
+                //onSelected: (value) => voidCallback(),
                 avatar: Icon(icon.icon),
                 label: Text(icon.title),
               )

@@ -3,20 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/tag.dart';
 import 'package:tasker/core/model/task.dart';
+import 'package:tasker/core/utils/style_constents.dart';
 import 'package:tasker/core/utils/tags.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/widget/tag/tag_list.dart';
+import 'package:tasker/core/widget/task/task.dart';
 
 class TaskView extends StatelessWidget
 {
   static const String taskViewRoute = '/tasks';
 
   const TaskView({Key? key}) : super(key: key);
-
-  void example()
-  {
-    print('ASD');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,7 @@ class TaskView extends StatelessWidget
             body: Column(
               children: [
                 _buildAppBar(context),
-                TagList(voidCallback: example,),
+                const TagList(),
                 const SizedBox(height: 20,),
                 Expanded(
                     child: state.isLoading ? const Center(
@@ -34,12 +31,13 @@ class TaskView extends StatelessWidget
                       ) :
                       ListView(
                         physics: const BouncingScrollPhysics(),
-                        children: [for (Task i in state.tasks) _buildTask()],
+                        children: [for (Task task in state.tasks) TaskWidget(task: task)],
                       ),
                   )
               ],
             ),
             floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.add),
               onPressed: () => {
                 Navigator.pushNamed(context, AddTaskView.addTaskViewRoute),
                 //context.read<TaskCubit>().addTask()
@@ -50,53 +48,10 @@ class TaskView extends StatelessWidget
     );
   }
 
-  Widget _buildTask()
-  {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Card(
-        elevation: 10,
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Task title', style: TextStyle(fontSize: 18),),
-                      SizedBox(height: 10,),
-                      Text('Lorem ipsum, Lorem ipsum'),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Icon(Icons.add)
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                children: const [
-                  Chip(avatar: Icon(Icons.school), label: Text('school')),
-                  SizedBox(width: 10,),
-                  Chip(avatar: Icon(Icons.shopping_cart) , label: Text('Shopping'))
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildAppBar(BuildContext context)
   {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+      padding: const AppBarPadding.all(),
       child: Row(
         children: [
           IconButton(

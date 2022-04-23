@@ -9,6 +9,11 @@ class ThemeCubit extends Cubit<ThemeData> {
       foregroundColor: Colors.white,
     ),
     brightness: Brightness.light,
+    colorScheme: const ColorScheme.light(
+        primary: Colors.pink
+    ).copyWith(
+      secondary: Colors.blue,
+    ),
   );
 
   static final _darkTheme = ThemeData(
@@ -16,6 +21,12 @@ class ThemeCubit extends Cubit<ThemeData> {
       foregroundColor: Colors.black,
     ),
     brightness: Brightness.dark,
+    primaryColor: Colors.pink. shade200,
+    colorScheme: const ColorScheme.dark(
+      primary: Colors.purple
+    ).copyWith(
+      secondary: Colors.green,
+    ),
   );
 
   /// Toggles the current brightness between light and dark.

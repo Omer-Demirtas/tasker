@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
@@ -21,8 +22,17 @@ class HomeView extends StatelessWidget
               Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: Row(
-                    children: const [
-                      Icon(Icons.menu),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(Icons.menu),
+                      IconButton(
+                          onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                          icon: Icon(
+                              (context.read<ThemeCubit>().state.brightness == Brightness.dark) ?
+                              Icons.dark_mode :
+                              Icons.light_mode
+                          )
+                      ),
                     ],
                   )
               ),
