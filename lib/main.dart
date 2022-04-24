@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
+import 'package:tasker/core/service/task_service.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/view/home/home_view.dart';
@@ -50,7 +51,7 @@ class App extends StatelessWidget {
             create: (context) => ThemeCubit(),
           ),
           BlocProvider<TaskCubit>(
-            create: (context) => TaskCubit(),
+            create: (context) => TaskCubit(taskRepository: TaskDBService())
           ),
         ],
         child: const MyApp(),

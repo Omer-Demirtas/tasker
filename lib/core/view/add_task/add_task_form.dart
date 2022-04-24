@@ -64,7 +64,6 @@ class _AddTaskFormState extends State<AddTaskForm>
               const SizedBox(height: 20,),
               const TagList(),
               const SizedBox(height: 40,),
-
               const SizedBox(height: 20,),
               TextFormField(
                 controller: _taskDateController,

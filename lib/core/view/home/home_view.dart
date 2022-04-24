@@ -39,9 +39,14 @@ class HomeView extends StatelessWidget
               const SectionTitle(),
               Row(
                 children: [
-                  ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(context, TaskView.taskViewRoute),
-                      child: const Text('Go to tasks')
+                  BlocBuilder<TaskCubit, TaskState>(
+                    builder: (context, state) => ElevatedButton(
+                        onPressed: () {
+                          context.read<TaskCubit>().getAll();
+                          Navigator.pushNamed(context, TaskView.taskViewRoute);
+                        },
+                        child: const Text('Go to tasks')
+                    ),
                   )
                 ],
               ),
