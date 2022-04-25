@@ -9,18 +9,19 @@ class TagList extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      //padding: const EdgeInsets.symmetric(horizontal: 20),
       margin: const EdgeInsets.only(top: 10),
       height: 50,
       child: ListView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
+          const SizedBox(width: 10,),
           for (Tag icon in Tags.tags) Container(
               margin: const EdgeInsets.only(right: 10),
               child: InputChip(
                 //onSelected: (value) => voidCallback(),
-                avatar: Icon(icon.icon),
+                //avatar: Icon(icon.icon),
                 label: Text(icon.title),
               )
           )

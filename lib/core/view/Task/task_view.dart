@@ -5,6 +5,7 @@ import 'package:tasker/core/helper/database_provider.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/utils/style_constents.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
+import 'package:tasker/core/widget/day_list.dart';
 import 'package:tasker/core/widget/tag/tag_list.dart';
 import 'package:tasker/core/widget/task/task.dart';
 
@@ -22,25 +23,17 @@ class TaskView extends StatelessWidget
             body: Column(
               children: [
                 _buildAppBar(context),
-                ElevatedButton(
-                    onPressed: ()
-                    {
-                      //DatabaseProvider().getAllTasks();
-                      DatabaseProvider().deleteAll();
-                    },
-                    child: const Text('test')
-                ),
                 const TagList(),
                 const SizedBox(height: 20,),
                 Expanded(
-                    child: state.isLoading ? const Center(
-                        child: CircularProgressIndicator(),
-                      ) :
-                      ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: [for (Task task in state.tasks) TaskWidget(task: task)],
-                      ),
-                  )
+                  child: state.isLoading ? const Center(
+                    child: CircularProgressIndicator(),
+                  ) :
+                  ListView(
+                    physics: const BouncingScrollPhysics(),
+                    children: [for (Task task in state.tasks) TaskWidget(task: task)],
+                  ),
+                )
               ],
             ),
             floatingActionButton: FloatingActionButton(

@@ -6,6 +6,7 @@ import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/widget/section_title.dart';
+import 'package:tasker/core/widget/task/task.dart';
 
 class HomeView extends StatelessWidget
 {
@@ -37,18 +38,29 @@ class HomeView extends StatelessWidget
                   )
               ),
               const SectionTitle(),
-              Row(
-                children: [
-                  BlocBuilder<TaskCubit, TaskState>(
-                    builder: (context, state) => ElevatedButton(
-                        onPressed: () {
-                          context.read<TaskCubit>().getAll();
-                          Navigator.pushNamed(context, TaskView.taskViewRoute);
-                        },
-                        child: const Text('Go to tasks')
-                    ),
+              Expanded(
+                child: BlocBuilder<TaskCubit, TaskState>(
+                  builder: (context, state) => ListView(
+                    children: [
+                      Row(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                context.read<TaskCubit>().getAll();
+                                Navigator.pushNamed(context, TaskView.taskViewRoute);
+                              },
+                              child: const Text('Go to tasks')
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          for (Task task in state.tasks.sublist(0, 3)) TaskWidget(task: task)
+                        ],
+                      )
+                    ],
                   )
-                ],
+                ),
               ),
             ],
           ),

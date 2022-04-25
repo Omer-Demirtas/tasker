@@ -57,14 +57,20 @@ class _AddTaskFormState extends State<AddTaskForm>
         padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         child: Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
             children: [
-              TextFormField(initialValue: 'Title', onSaved: (newValue) => title = newValue!,),
-              const SizedBox(height: 20,),
-              const SizedBox(height: 20,),
               const TagList(),
-              const SizedBox(height: 40,),
-              const SizedBox(height: 20,),
+              SizedBox(height: height * 0.05,),
+              TextFormField(
+                onSaved: (newValue) => title = newValue!,
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                  //errorText: 'Error message',
+                  border: OutlineInputBorder(),
+                  //suffixIcon: Icon(Icons.error,),
+                ),
+              ),
+              SizedBox(height: height * 0.05,),
               TextFormField(
                 controller: _taskDateController,
                 onTap: () => _selectDate(),
@@ -77,28 +83,38 @@ class _AddTaskFormState extends State<AddTaskForm>
                 ),
               ),
               SizedBox(height: height * 0.05,),
-              TextFormField(
-                controller: _startDateController,
-                onTap: () => _selectTime("start"),
-                focusNode: AlwaysDisabledFocusNode(),
-                decoration: const InputDecoration(
-                  labelText: 'Start At',
-                  //errorText: 'Error message',
-                  border: OutlineInputBorder(),
-                  //suffixIcon: Icon(Icons.error,),
-                ),
-              ),
-              SizedBox(height: height * 0.05,),
-              TextFormField(
-                controller: _finishDateController,
-                onTap: () => _selectTime("finish"),
-                focusNode: AlwaysDisabledFocusNode(),
-                decoration: const InputDecoration(
-                  labelText: 'Finish At',
-                  //errorText: 'Error message',
-                  border: OutlineInputBorder(),
-                  //suffixIcon: Icon(Icons.error,),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: width * 0.40,
+                    child: TextFormField(
+                      controller: _startDateController,
+                      onTap: () => _selectTime("start"),
+                      focusNode: AlwaysDisabledFocusNode(),
+                      decoration: const InputDecoration(
+                        labelText: 'Start At',
+                        //errorText: 'Error message',
+                        border: OutlineInputBorder(),
+                        //suffixIcon: Icon(Icons.error,),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.40,
+                    child: TextFormField(
+                      controller: _finishDateController,
+                      onTap: () => _selectTime("finish"),
+                      focusNode: AlwaysDisabledFocusNode(),
+                      decoration: const InputDecoration(
+                        labelText: 'Finish At',
+                        //errorText: 'Error message',
+                        border: OutlineInputBorder(),
+                        //suffixIcon: Icon(Icons.error,),
+                      ),
+                    ),
+                  )
+                ],
               ),
               SizedBox(height: height * 0.05,),
               Switch(

@@ -31,8 +31,8 @@ class Task {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      startAt: DateTimeConverter.convertIntToTime(map['start_at'] as int),
-      finishAt: DateTimeConverter.convertIntToTime(map['finish_at'] as int),
+      startAt: DateTimeConverter.convertStringToTime(map['start_at']),
+      finishAt: DateTimeConverter.convertStringToTime(map['finish_at']),
       cron: map['cron'],
       cyclical: map['cyclical'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
@@ -45,8 +45,8 @@ class Task {
       'title': task.title,
       'description': task.description,
       'date': task.date?.millisecondsSinceEpoch,
-      'start_at': DateTimeConverter.convertTimeToInt(task.startAt!),
-      'finish_at': DateTimeConverter.convertTimeToInt(task.finishAt!),
+      'start_at': DateTimeConverter.convertTimeToJustString(task.startAt!),
+      'finish_at': DateTimeConverter.convertTimeToJustString(task.finishAt!),
       'is_cyclical': 1, //task.cyclical,
       'cron': 'asd', //task.cron
     };

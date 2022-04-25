@@ -4,12 +4,10 @@ import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/service/base_repository.dart';
 
 abstract class TaskRepository extends BaseRepository<Task>
-{
-}
+{}
 
 class TaskDBService implements TaskRepository
 {
-
   @override
   Future<void> add(Task task) async
   {
@@ -32,5 +30,4 @@ class TaskDBService implements TaskRepository
     // TODO: implement update
     throw UnimplementedError();
   }
-
 }

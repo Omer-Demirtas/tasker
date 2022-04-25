@@ -24,7 +24,7 @@ class TaskWidget extends StatelessWidget
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(task.title!, style: TextStyle(fontSize: 18),),
+                      Text(task.title!, style: const TextStyle(fontSize: 18),),
                       const SizedBox(height: 10,),
                       Text(task.description!),
                     ],
@@ -44,9 +44,9 @@ class TaskWidget extends StatelessWidget
                 children: [
                   Row(
                     children: const [
-                      Chip(avatar: Icon(Icons.school), label: Text('school')),
+                      Chip(label: Text('school')),
                       SizedBox(width: 10,),
-                      Chip(avatar: Icon(Icons.shopping_cart) , label: Text('Shopping'))
+                      Chip(label: Text('Shopping'))
                     ],
                   ),
                   Row(

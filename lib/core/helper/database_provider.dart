@@ -30,7 +30,7 @@ class DatabaseProvider {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'Tasks.db');
 
-    return await openDatabase(path, version: 2, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async
@@ -52,8 +52,8 @@ class DatabaseProvider {
                 description $stringType,
                 is_cyclical $boolType,
                 date $integerType,
-                start_at $integerType,
-                finish_at $integerType
+                start_at $stringType,
+                finish_at $stringType
               )
             '''
     );
