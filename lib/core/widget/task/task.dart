@@ -10,56 +10,52 @@ class TaskWidget extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Card(
-        elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(task.title!, style: const TextStyle(fontSize: 18),),
-                      const SizedBox(height: 10,),
-                      Text(task.description!),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        DateTimeConverter.convertDateTimeToString(task.date!)
-                      )
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(height: 10,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: const [
-                      Chip(label: Text('school')),
-                      SizedBox(width: 10,),
-                      Chip(label: Text('Shopping'))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '${DateTimeConverter.convertTimeToString(task.startAt!)} - ${DateTimeConverter.convertTimeToString(task.finishAt!)}',
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
+    return Card(
+      elevation: 10,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(task.title!, style: const TextStyle(fontSize: 18),),
+                (task.cyclical != null && task.cyclical == true) ? const Icon(Icons.loop) : const SizedBox()
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 10,),
+                    Text(task.description!),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: const [
+                    Chip(label: Text('school')),
+                    SizedBox(width: 10,),
+                    Chip(label: Text('Shopping'))
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '${DateTimeConverter.convertTimeToString(task.startAt!)} - ${DateTimeConverter.convertTimeToString(task.finishAt!)}',
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

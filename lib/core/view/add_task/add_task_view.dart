@@ -16,9 +16,16 @@ class AddTaskView extends StatelessWidget
         body: Column(
           children: [
             _buildAppBar(context),
-            const AddTaskForm()
+            Expanded(
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: const [
+                  AddTaskForm()
+                ],
+              ),
+            ),
           ],
-        ),
+        )
       ),
     );
   }

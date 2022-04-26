@@ -53,11 +53,12 @@ class HomeView extends StatelessWidget
                           ),
                         ],
                       ),
+                      state.tasks.isNotEmpty ?
                       Column(
                         children: [
                           for (Task task in state.tasks.sublist(0, 3)) TaskWidget(task: task)
                         ],
-                      )
+                      ) : Center(child: Text('No tasks found'),)
                     ],
                   )
                 ),

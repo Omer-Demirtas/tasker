@@ -14,7 +14,6 @@ class TaskCubit extends Cubit<TaskState>
   void addTask(Task task) async
   {
     emit(TaskState(isLoading: true, tasks: state.tasks));
-    await Future.delayed(const Duration(seconds: 1));
     List<Task> tasks = state.tasks.toList();
     await taskRepository.add(task);
     tasks.add(task);
@@ -24,8 +23,12 @@ class TaskCubit extends Cubit<TaskState>
   Future<void> getAll() async
   {
     emit(TaskState(tasks: state.tasks, isLoading: true));
-    await Future.delayed(Duration(seconds: 1));
     List<Task> tasks = await taskRepository.getAll();
     emit(TaskState(tasks: tasks, isLoading: false));
+  }
+
+  Future<void> delete(int id) async
+  {
+    taskRepository.delete(id);
   }
 }

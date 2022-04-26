@@ -52,106 +52,113 @@ class _AddTaskFormState extends State<AddTaskForm>
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const TagList(),
-              SizedBox(height: height * 0.05,),
-              TextFormField(
-                onSaved: (newValue) => title = newValue!,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                  //errorText: 'Error message',
-                  border: OutlineInputBorder(),
-                  //suffixIcon: Icon(Icons.error,),
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const TagList(),
+            SizedBox(height: height * 0.05,),
+            TextFormField(
+              onSaved: (newValue) => title = newValue!,
+              decoration: const InputDecoration(
+                labelText: 'Title',
+                //errorText: 'Error message',
+                border: OutlineInputBorder(),
+                //suffixIcon: Icon(Icons.error,),
               ),
-              SizedBox(height: height * 0.05,),
-              TextFormField(
-                controller: _taskDateController,
-                onTap: () => _selectDate(),
-                focusNode: AlwaysDisabledFocusNode(),
-                decoration: const InputDecoration(
-                  labelText: 'Date',
-                  //errorText: 'Error message',
-                  border: OutlineInputBorder(),
-                  //suffixIcon: Icon(Icons.error,),
-                ),
+            ),
+            SizedBox(height: height * 0.05,),
+            TextFormField(
+              controller: _taskDateController,
+              onTap: () => _selectDate(),
+              focusNode: AlwaysDisabledFocusNode(),
+              decoration: const InputDecoration(
+                labelText: 'Date',
+                //errorText: 'Error message',
+                border: OutlineInputBorder(),
+                //suffixIcon: Icon(Icons.error,),
               ),
-              SizedBox(height: height * 0.05,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: width * 0.40,
-                    child: TextFormField(
-                      controller: _startDateController,
-                      onTap: () => _selectTime("start"),
-                      focusNode: AlwaysDisabledFocusNode(),
-                      decoration: const InputDecoration(
-                        labelText: 'Start At',
-                        //errorText: 'Error message',
-                        border: OutlineInputBorder(),
-                        //suffixIcon: Icon(Icons.error,),
-                      ),
+            ),
+            SizedBox(height: height * 0.05,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: width * 0.40,
+                  child: TextFormField(
+                    controller: _startDateController,
+                    onTap: () => _selectTime("start"),
+                    focusNode: AlwaysDisabledFocusNode(),
+                    decoration: const InputDecoration(
+                      labelText: 'Start At',
+                      //errorText: 'Error message',
+                      border: OutlineInputBorder(),
+                      //suffixIcon: Icon(Icons.error,),
                     ),
                   ),
-                  SizedBox(
-                    width: width * 0.40,
-                    child: TextFormField(
-                      controller: _finishDateController,
-                      onTap: () => _selectTime("finish"),
-                      focusNode: AlwaysDisabledFocusNode(),
-                      decoration: const InputDecoration(
-                        labelText: 'Finish At',
-                        //errorText: 'Error message',
-                        border: OutlineInputBorder(),
-                        //suffixIcon: Icon(Icons.error,),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: height * 0.05,),
-              Switch(
-                  value: _isCyclical,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCyclical = value;
-                    });
-                  },
-              ),
-              SizedBox(height: height * 0.05,),
-              Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                    onPressed: ()
-                    {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState?.save();
-
-                        context.read<TaskCubit>().addTask(
-                            Task(
-                              description: 'asd',
-                              title: title,
-                              finishAt: _finishAt,
-                              startAt: _startAt,
-                              date: _taskDateTime,
-                              tags: [],
-                            )
-                        );
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text('Save')
                 ),
+                SizedBox(
+                  width: width * 0.40,
+                  child: TextFormField(
+                    controller: _finishDateController,
+                    onTap: () => _selectTime("finish"),
+                    focusNode: AlwaysDisabledFocusNode(),
+                    decoration: const InputDecoration(
+                      labelText: 'Finish At',
+                      //errorText: 'Error message',
+                      border: OutlineInputBorder(),
+                      //suffixIcon: Icon(Icons.error,),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: height * 0.05,),
+            ListTile(
+            title: const Text(
+              'cyclical',
+            ),
+            trailing: Switch(
+              value: _isCyclical,
+              //activeColor: Color(0xFF6200EE),
+              onChanged: (value)
+              {
+                setState(() {
+                  _isCyclical = value;
+                });
+              },
+            ),
+            ),
+            SizedBox(height: height * 0.05,),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                  onPressed: ()
+                  {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState?.save();
+
+                      context.read<TaskCubit>().addTask(
+                          Task(
+                            description: 'asd',
+                            title: title,
+                            finishAt: _finishAt,
+                            startAt: _startAt,
+                            date: _taskDateTime,
+                            cyclical: _isCyclical,
+                            cron: '0 0 0/2 ? * * *',
+                            tags: [],
+                          )
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Save')
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
