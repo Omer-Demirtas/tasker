@@ -17,23 +17,48 @@ class TaskView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+
     return SafeArea(
       child: BlocBuilder<TaskCubit, TaskState>(
             builder: (context, state) => Scaffold(
             body: Column(
               children: [
                 _buildAppBar(context),
-                const TagList(),
-                const SizedBox(height: 20,),
+                SizedBox(height: height * 0.05,),
                 Expanded(
-                  child: state.isLoading ? const Center(
-                    child: CircularProgressIndicator(),
-                  ) :
-                  ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: [for (Task task in state.tasks) TaskWidget(task: task)],
-                  ),
-                )
+                    child: ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: const [
+                              Text('2022', style: TextStyle(fontSize: 36),),
+                              SizedBox(width: 10,),
+                              Text('April', style: TextStyle(fontSize: 36),),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.01,),
+                        const DaYList(),
+                        const TagList(),
+                        const SizedBox(height: 20,),
+                        state.isLoading ?
+                        Padding(
+                          padding: EdgeInsets.only(top: height * 0.2),
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ) :
+                        Column(
+                          children: [
+                            for (Task task in state.tasks) TaskWidget(task: task)
+                          ],
+                        )
+                      ],
+                    ),
+                ),
               ],
             ),
             floatingActionButton: FloatingActionButton(

@@ -6,6 +6,7 @@ import 'package:tasker/core/service/task_service.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/view/home/home_view.dart';
+import 'package:tasker/core/view/settings/settings_view.dart';
 
 void main() {
   runApp(const App());
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         theme: theme,
         routes: {
           AddTaskView.addTaskViewRoute: (context) => const AddTaskView(),
-          TaskView.taskViewRoute: (context) => const TaskView()
+          TaskView.taskViewRoute: (context) => const TaskView(),
+          SettingsView.settingsRoute: (context) => const SettingsView()
         },
         onGenerateRoute: (settings) {
           if (settings.name == AddTaskView.addTaskViewRoute) {

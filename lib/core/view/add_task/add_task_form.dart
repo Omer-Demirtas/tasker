@@ -19,7 +19,7 @@ class _AddTaskFormState extends State<AddTaskForm>
   String title = "";
 
   TimeOfDay _startAt = TimeOfDay.now();
-  TimeOfDay _finishAt = TimeOfDay.now().add(hour: 1);
+  TimeOfDay _finishAt = TimeOfDay.now();
 
   DateTime _taskDateTime = DateTime.now();
 
