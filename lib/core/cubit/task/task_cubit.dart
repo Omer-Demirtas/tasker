@@ -23,6 +23,7 @@ class TaskCubit extends Cubit<TaskState>
   Future<void> getAll() async
   {
     emit(TaskState(tasks: state.tasks, isLoading: true));
+    await Future.delayed(Duration(seconds: 1));
     List<Task> tasks = await taskRepository.getAll();
     emit(TaskState(tasks: tasks, isLoading: false));
   }

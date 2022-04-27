@@ -4,7 +4,7 @@ import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
-import 'package:tasker/core/view/add_task/add_task_view.dart';
+import 'package:tasker/core/view/settings/settings_view.dart';
 import 'package:tasker/core/widget/section_title.dart';
 import 'package:tasker/core/widget/task/task.dart';
 
@@ -27,12 +27,10 @@ class HomeView extends StatelessWidget
                     children: [
                       const Icon(Icons.menu),
                       IconButton(
-                          onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-                          icon: Icon(
-                              (context.read<ThemeCubit>().state.brightness == Brightness.dark) ?
-                              Icons.dark_mode :
-                              Icons.light_mode
+                          onPressed: () => Navigator.pushNamed(context,
+                            SettingsView.settingsRoute
                           )
+                          , icon: const Icon(Icons.settings)
                       ),
                     ],
                   )
@@ -53,12 +51,7 @@ class HomeView extends StatelessWidget
                           ),
                         ],
                       ),
-                      state.tasks.isNotEmpty ?
-                      Column(
-                        children: [
-                          for (Task task in state.tasks.sublist(0, 3)) TaskWidget(task: task)
-                        ],
-                      ) : Center(child: Text('No tasks found'),)
+
                     ],
                   )
                 ),
