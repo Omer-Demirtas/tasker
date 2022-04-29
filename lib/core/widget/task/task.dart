@@ -49,7 +49,7 @@ class TaskWidget extends StatelessWidget
                 Row(
                   children: [
                     Text(
-                      '${DateTimeConverter.convertTimeToString(task.startAt!)} - ${DateTimeConverter.convertTimeToString(task.finishAt!)}',
+                      '${DateTimeConverter.convertDateTimeToString(task.startAt!)} - ${DateTimeConverter.convertDateTimeToString(task.finishAt!)}',
                     ),
                   ],
                 )

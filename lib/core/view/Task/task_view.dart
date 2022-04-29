@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
-import 'package:tasker/core/helper/database_provider.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/utils/style_constents.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
@@ -25,7 +24,7 @@ class TaskView extends StatelessWidget
             body: Column(
               children: [
                 _buildAppBar(context),
-                SizedBox(height: height * 0.05,),
+                SizedBox(height: height * 0.02,),
                 Expanded(
                     child: ListView(
                       physics: const BouncingScrollPhysics(),
@@ -41,10 +40,12 @@ class TaskView extends StatelessWidget
                           ),
                         ),
                         SizedBox(height: height * 0.01,),
-                        const DaYList(),
+                        DayList(selectedDay: (state.day! - 1), callback: (day) =>
+                            context.read<TaskCubit>().updateDay(day)
+                        ),
                         const TagList(),
                         const SizedBox(height: 20,),
-                        state.isLoading ?
+                        state.isLoading! ?
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.2),
                           child: const Center(
@@ -53,7 +54,7 @@ class TaskView extends StatelessWidget
                         ) :
                         Column(
                           children: [
-                            for (Task task in state.tasks) TaskWidget(task: task)
+                            for (Task task in state.tasks!) TaskWidget(task: task)
                           ],
                         )
                       ],

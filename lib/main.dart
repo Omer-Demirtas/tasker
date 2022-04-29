@@ -53,7 +53,7 @@ class App extends StatelessWidget {
             create: (context) => ThemeCubit(),
           ),
           BlocProvider<TaskCubit>(
-            create: (context) => TaskCubit(taskRepository: TaskDBService())
+            create: (context) => TaskCubit(taskRepository: TaskDBService(), day: DateTime.now().day)
           ),
         ],
         child: const MyApp(),

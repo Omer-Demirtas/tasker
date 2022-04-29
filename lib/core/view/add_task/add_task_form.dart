@@ -18,10 +18,8 @@ class _AddTaskFormState extends State<AddTaskForm>
 {
   String title = "";
 
-  TimeOfDay _startAt = TimeOfDay.now();
-  TimeOfDay _finishAt = TimeOfDay.now();
-
-  DateTime _taskDateTime = DateTime.now();
+  DateTime _startAt = DateTime.now();
+  DateTime _finishAt = DateTime.now();
 
   bool _isCyclical = false;
 
@@ -29,19 +27,16 @@ class _AddTaskFormState extends State<AddTaskForm>
 
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _finishDateController = TextEditingController();
-  final TextEditingController _taskDateController = TextEditingController();
 
   @override
   void initState() {
-    _startDateController.text = DateTimeConverter.convertTimeToString(_startAt);
-    _finishDateController.text = DateTimeConverter.convertTimeToString(_finishAt);
-    _taskDateController.text = DateTimeConverter.convertDateTimeToString(_taskDateTime);
+    _startDateController.text = DateTimeConverter.convertDateTimeToString(_startAt);
+    _finishDateController.text = DateTimeConverter.convertDateTimeToString(_finishAt);
     super.initState();
   }
 
   @override
   void dispose() {
-    _taskDateController.dispose();
     _finishDateController.dispose();
     _startDateController.dispose();
     super.dispose();
@@ -70,18 +65,6 @@ class _AddTaskFormState extends State<AddTaskForm>
               ),
             ),
             SizedBox(height: height * 0.05,),
-            TextFormField(
-              controller: _taskDateController,
-              onTap: () => _selectDate(),
-              focusNode: AlwaysDisabledFocusNode(),
-              decoration: const InputDecoration(
-                labelText: 'Date',
-                //errorText: 'Error message',
-                border: OutlineInputBorder(),
-                //suffixIcon: Icon(Icons.error,),
-              ),
-            ),
-            SizedBox(height: height * 0.05,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -89,7 +72,7 @@ class _AddTaskFormState extends State<AddTaskForm>
                   width: width * 0.40,
                   child: TextFormField(
                     controller: _startDateController,
-                    onTap: () => _selectTime("start"),
+                    onTap: () => _selectDate("start"),
                     focusNode: AlwaysDisabledFocusNode(),
                     decoration: const InputDecoration(
                       labelText: 'Start At',
@@ -103,7 +86,7 @@ class _AddTaskFormState extends State<AddTaskForm>
                   width: width * 0.40,
                   child: TextFormField(
                     controller: _finishDateController,
-                    onTap: () => _selectTime("finish"),
+                    onTap: () => _selectDate("finish"),
                     focusNode: AlwaysDisabledFocusNode(),
                     decoration: const InputDecoration(
                       labelText: 'Finish At',
@@ -146,7 +129,6 @@ class _AddTaskFormState extends State<AddTaskForm>
                             title: title,
                             finishAt: _finishAt,
                             startAt: _startAt,
-                            date: _taskDateTime,
                             cyclical: _isCyclical,
                             cron: '0 0 0/2 ? * * *',
                             tags: [],
@@ -164,41 +146,26 @@ class _AddTaskFormState extends State<AddTaskForm>
     );
   }
 
-  _selectDate() async
+  _selectDate(String type) async
   {
     DateTime? date = await showDatePicker(
       context: context,
-      initialDate: _taskDateTime,
+      initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2040),
     );
 
-    if(date != null)
-    {
-        _taskDateTime = date;
-        _taskDateController.text = DateTimeConverter.convertDateTimeToString(date);
-    }
-  }
-
-  _selectTime(String type) async
-  {
-    TimeOfDay? time = await showTimePicker(
-      context: context,
-      initialTime: type == "start" ? _startAt : _finishAt,
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
-
-    if (time != null)
+    if (date != null)
     {
       if(type == 'start')
       {
-        _startAt = time;
-        _startDateController.text = DateTimeConverter.convertTimeToString(time);
+        _startAt = date;
+        _startDateController.text = DateTimeConverter.convertDateTimeToString(date);
       }
       else
       {
-        _finishAt = time;
-        _finishDateController.text = DateTimeConverter.convertTimeToString(time);
+        _finishAt = date;
+        _finishDateController.text = DateTimeConverter.convertDateTimeToString(date);
       }
     }
   }

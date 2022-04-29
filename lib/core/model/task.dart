@@ -6,9 +6,8 @@ class Task {
   final int? id;
   final String? title;
   final String? description;
-  final DateTime? date;
-  final TimeOfDay? startAt;
-  final TimeOfDay? finishAt;
+  final DateTime? startAt;
+  final DateTime? finishAt;
   final List<Tag>? tags;
   final bool? cyclical;
   final String? cron;
@@ -17,7 +16,6 @@ class Task {
     this.id,
     this.title,
     this.description,
-    this.date,
     this.startAt,
     this.finishAt,
     this.tags,
@@ -31,11 +29,10 @@ class Task {
       id: map['id'],
       title: map['title'],
       description: map['description'],
-      startAt: DateTimeConverter.convertStringToTime(map['start_at']),
-      finishAt: DateTimeConverter.convertStringToTime(map['finish_at']),
+      startAt: DateTime.fromMillisecondsSinceEpoch(map['start_at']),
+      finishAt: DateTime.fromMillisecondsSinceEpoch(map['finish_at']),
       cron: map['cron'],
-      cyclical: map['cyclical'],
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      cyclical: map['is_cyclical'] == 1 ? true : false,
     );
   }
 
@@ -44,10 +41,9 @@ class Task {
     return {
       'title': task.title,
       'description': task.description,
-      'date': task.date?.millisecondsSinceEpoch,
-      'start_at': DateTimeConverter.convertTimeToJustString(task.startAt!),
-      'finish_at': DateTimeConverter.convertTimeToJustString(task.finishAt!),
-      'is_cyclical': 1, //task.cyclical,
+      'start_at': task.startAt?.millisecondsSinceEpoch,
+      'finish_at': task.finishAt?.millisecondsSinceEpoch,
+      'is_cyclical': task.cyclical == true ? 1 : 0, //task.cyclical,
       'cron': 'asd', //task.cron
     };
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/settings/settings_view.dart';
 import 'package:tasker/core/widget/section_title.dart';
-import 'package:tasker/core/widget/task/task.dart';
 
 class HomeView extends StatelessWidget
 {
@@ -34,6 +32,15 @@ class HomeView extends StatelessWidget
                       ),
                     ],
                   )
+              ),
+              ElevatedButton(
+                  onPressed: (){
+                    print(DateTime.now().day);
+                    //context.read<TaskCubit>().deleteAll();
+                    DateTime now = new DateTime.now();
+                    DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
+                  },
+                  child: Text('delete all task')
               ),
               const SectionTitle(),
               Expanded(
