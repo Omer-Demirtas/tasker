@@ -9,11 +9,11 @@ class TaskCubit extends Cubit<TaskState>
 {
   final TaskRepository taskRepository;
 
-  TaskCubit({required this.taskRepository, required int day}) : super(
+  TaskCubit({required this.taskRepository, required DateTime date}) : super(
       TaskState(
-          tasks: [],
+          tasks: const [],
           isLoading: false,
-          day: day
+          date: date
       )
   );
 
@@ -29,6 +29,18 @@ class TaskCubit extends Cubit<TaskState>
     emit(state.copyWith(isLoading: false, tasks: tasks));
   }
 
+  Future<void> loadTasks() async
+  {
+    emit(state.copyWith(isLoading: true, tasks: []));
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    List<Task> tasks = await taskRepository.getByDate(state.date);
+
+    emit(state.copyWith(tasks: tasks, isLoading: false));
+  }
+  
+  
   Future<void> getAll() async
   {
     emit(state.copyWith(isLoading: true));
@@ -50,10 +62,10 @@ class TaskCubit extends Cubit<TaskState>
     return await taskRepository.deleteAll();
   }
 
-  updateDay(int day) async
+  updateDay(DateTime d) async
   {
-    emit(state.copyWith(day: day, isLoading: true));
-    DateTime date = DateTime(DateTime.now().year, DateTime.now().month, day);
+    emit(state.copyWith(date: d, isLoading: true));
+    DateTime date = DateTime(DateTime.now().year, DateTime.now().month, d.day);
     List<Task> tasks = await taskRepository.getByDate(date);
     emit(state.copyWith(tasks: tasks));
   }

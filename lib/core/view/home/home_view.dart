@@ -33,15 +33,6 @@ class HomeView extends StatelessWidget
                     ],
                   )
               ),
-              ElevatedButton(
-                  onPressed: (){
-                    print(DateTime.now().day);
-                    //context.read<TaskCubit>().deleteAll();
-                    DateTime now = new DateTime.now();
-                    DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
-                  },
-                  child: Text('delete all task')
-              ),
               const SectionTitle(),
               Expanded(
                 child: BlocBuilder<TaskCubit, TaskState>(
@@ -51,7 +42,7 @@ class HomeView extends StatelessWidget
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                context.read<TaskCubit>().getAll();
+                                context.read<TaskCubit>().loadTasks();
                                 Navigator.pushNamed(context, TaskView.taskViewRoute);
                               },
                               child: const Text('Go to tasks')

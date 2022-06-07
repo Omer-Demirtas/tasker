@@ -53,10 +53,21 @@ class App extends StatelessWidget {
             create: (context) => ThemeCubit(),
           ),
           BlocProvider<TaskCubit>(
-            create: (context) => TaskCubit(taskRepository: TaskDBService(), day: DateTime.now().day)
+            create: (context) => TaskCubit(
+                taskRepository: TaskDBService(),
+                date: DateTime.now()
+            )
           ),
         ],
         child: const MyApp(),
     );
+  }
+}
+
+extension MyExtension on DateTime
+{
+  DateTime withDay(int day)
+  {
+    return DateTime(year, month, day);
   }
 }

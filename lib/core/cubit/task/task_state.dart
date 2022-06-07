@@ -5,23 +5,23 @@ class TaskState
 {
   final List<Task>? tasks;
   final bool? isLoading;
-  final int? day;
+  final DateTime date;
 
   const TaskState({
     this.isLoading = false,
     this.tasks,
-    this.day = 0
+    required this.date
   });
 
   TaskState copyWith({
     bool? isLoading,
     List<Task>? tasks,
-    int? day
+    DateTime? date
   }) {
     return TaskState(
       isLoading: isLoading ?? false,
       tasks: tasks ?? this.tasks,
-      day: day ?? this.day,
+      date: date ?? this.date,
     );
   }
 }
