@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasker/core/cubit/Theme/theme_cubit.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
 import 'package:tasker/core/model/task.dart';
 import 'package:tasker/core/view/Task/task_view.dart';
 import 'package:tasker/core/view/settings/settings_view.dart';
 import 'package:tasker/core/widget/section_title.dart';
-import 'package:tasker/core/widget/task/task.dart';
 
 class HomeView extends StatelessWidget
 {
@@ -44,7 +42,7 @@ class HomeView extends StatelessWidget
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                context.read<TaskCubit>().getAll();
+                                context.read<TaskCubit>().loadTasks();
                                 Navigator.pushNamed(context, TaskView.taskViewRoute);
                               },
                               child: const Text('Go to tasks')

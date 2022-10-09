@@ -11,7 +11,7 @@ class SectionTitle extends StatelessWidget
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
-          Text('Your close tasks',
+          Text('Your Upcoming Tasks',
             style: TextStyle(fontSize: 24),
           ),
           Icon(Icons.chevron_right, size: 24,)

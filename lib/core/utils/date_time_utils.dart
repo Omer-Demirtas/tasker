@@ -1,7 +1,36 @@
 
 import 'package:flutter/material.dart';
 
-class DateTimeConverter {
+class DateTimeConverter
+{
+  static const days =
+  [
+    "",
+    "MON",
+    "THU",
+    "Wed",
+    "Thur",
+    "Fri",
+    "SAT",
+    "SUN",
+  ];
+
+  static const months =
+  [
+    "",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 
   static String convertDateTimeToString(DateTime date)
   {
@@ -32,5 +61,10 @@ class DateTimeConverter {
   static TimeOfDay convertStringToTime(String str)
   {
     return TimeOfDay(hour: int.parse(str.substring(0, 2)), minute: int.parse(str.substring(2)));
+  }
+
+  static String getDayName(int weakDay)
+  {
+    return days[weakDay];
   }
 }

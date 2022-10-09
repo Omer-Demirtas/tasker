@@ -30,7 +30,7 @@ class DatabaseProvider {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'Tasks.db');
 
-    return await openDatabase(path, version: 3, onCreate: _createDB);
+    return await openDatabase(path, version: 5, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async
@@ -51,9 +51,8 @@ class DatabaseProvider {
                 title $stringType,
                 description $stringType,
                 is_cyclical $boolType,
-                date $integerType,
-                start_at $stringType,
-                finish_at $stringType
+                start_at $integerType,
+                finish_at $integerType
               )
             '''
     );
@@ -84,5 +83,18 @@ class DatabaseProvider {
     final db = await _db.database;
 
     final result = await db.delete(tableTask);
+  }
+
+  Future<List<Task>> getAllTaskByDate(DateTime startAt, DateTime finishAt)  async
+  {
+    final db = await _db.database;
+
+    final result = await db.query(
+      tableTask,
+      where: 'start_at >= ? and finish_at <= ?',
+      whereArgs: [startAt.millisecondsSinceEpoch, finishAt.millisecondsSinceEpoch],
+    );
+
+    return result.map((e) => Task.fromMap(e)).toList();
   }
 }

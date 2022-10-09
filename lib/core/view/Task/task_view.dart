@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasker/core/cubit/task/task_cubit.dart';
-import 'package:tasker/core/helper/database_provider.dart';
 import 'package:tasker/core/model/task.dart';
+import 'package:tasker/core/utils/date_time_utils.dart';
 import 'package:tasker/core/utils/style_constents.dart';
 import 'package:tasker/core/view/add_task/add_task_view.dart';
 import 'package:tasker/core/widget/day_list.dart';
 import 'package:tasker/core/widget/tag/tag_list.dart';
 import 'package:tasker/core/widget/task/task.dart';
+import 'package:tasker/main.dart';
 
 class TaskView extends StatelessWidget
 {
@@ -16,7 +17,8 @@ class TaskView extends StatelessWidget
   const TaskView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     final double height = MediaQuery.of(context).size.height;
 
     return SafeArea(
@@ -25,7 +27,7 @@ class TaskView extends StatelessWidget
             body: Column(
               children: [
                 _buildAppBar(context),
-                SizedBox(height: height * 0.05,),
+                SizedBox(height: height * 0.02,),
                 Expanded(
                     child: ListView(
                       physics: const BouncingScrollPhysics(),
@@ -33,18 +35,21 @@ class TaskView extends StatelessWidget
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
-                            children: const [
-                              Text('2022', style: TextStyle(fontSize: 36),),
+                            children: [
+                              Text('${state.date.year}', style: TextStyle(fontSize: 36),),
                               SizedBox(width: 10,),
-                              Text('April', style: TextStyle(fontSize: 36),),
+                              Text('${DateTimeConverter.months[state.date.month]}', style: TextStyle(fontSize: 36),),
                             ],
                           ),
                         ),
                         SizedBox(height: height * 0.01,),
-                        const DaYList(),
+                        DayList(
+                            date: state.date,
+                            callback: (day) => context.read<TaskCubit>().updateDay(state.date.withDay(day))
+                        ),
                         const TagList(),
                         const SizedBox(height: 20,),
-                        state.isLoading ?
+                        state.isLoading! ?
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.2),
                           child: const Center(
@@ -53,7 +58,7 @@ class TaskView extends StatelessWidget
                         ) :
                         Column(
                           children: [
-                            for (Task task in state.tasks) TaskWidget(task: task)
+                            for (Task task in state.tasks!) TaskWidget(task: task)
                           ],
                         )
                       ],
@@ -65,7 +70,6 @@ class TaskView extends StatelessWidget
               child: const Icon(Icons.add),
               onPressed: () => {
                 Navigator.pushNamed(context, AddTaskView.addTaskViewRoute),
-                //context.read<TaskCubit>().addTask()
               }
             ),
           ),
